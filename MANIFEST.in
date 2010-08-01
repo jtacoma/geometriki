@@ -1,0 +1,3 @@
+include geometriki/config/deployment.ini_tmpl
+recursive-include geometriki/public *
+recursive-include geometriki/templates *
