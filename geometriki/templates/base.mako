@@ -26,7 +26,9 @@
         ${self.actions()}
       </div>
 </%def>
-<%def name="foot()"></%def>
+<%def name="foot()">
+      <a href="http://gitorious.org/geometriki">geometriki</a>
+</%def>
 <%def name="navigation()">
       <a href="${h.url_for('pages')}">pages</a>
 </%def>
