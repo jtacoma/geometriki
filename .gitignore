@@ -1,5 +1,13 @@
+# Pylons/Geometriki
+data/*
+pages/*
+build/*
+dist/*
+doc/.build/*
+
 # Python
 *.pyc
+*.pyo
 
 # Generic
 *~

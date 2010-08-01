@@ -1,0 +1,51 @@
+/* 
+any of these are good: Cantarell, Molengo, Nobile
+(...none are really necessary)
+@import url(http://fonts.googleapis.com/css?family=Nobile);
+html, body { font-family: 'Nobile', sans-serif }
+*/
+
+/* basics: after css-reset-fonts-grids */
+h1.title { font-size: 167%; margin-bottom: 1em }
+h1 { font-size: 138.5%; font-weight: bold; margin-bottom: 0.5em }
+h2 { font-size: 123.1%; font-weight: bold; margin: 0.5em 0 }
+h3 { font-size: 108%; font-weight: bold }
+h4, h5, h6 { font-size: 108% }
+p, table { margin: 0.5em 0 }
+strong { font-weight: bolder }
+blockquote { margin: 1em; padding: 1em; border: 2px solid #eee }
+
+/* header and footer: diminished visibility, separation from content, some items float right */
+#hd, #ft { color: #444; }
+#hd a, #ft a { color: #448; }
+#hd { padding-bottom: 0.5em; text-align: right; }
+#hd #navigation-menu, #actions-menu { display: inline; padding-left: 1em; }
+html, body { background: #eee }
+#bd { background: #fff; padding: 1em; border: 2px solid #ddd }
+
+/* links: a tad less ugly */
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* nested blocks of text: */
+/*code, blockquote { padding: 2em } */
+code {
+  display: block;
+  background: #ddd;
+  margin: 1em;
+  padding: 0, 1em;
+}
+
+/* tables */
+td, th { text-align: center; padding: 0 3px }
+thead { border-bottom: 2px solid black }
+
+/* forms: */
+textarea { width: 100%; font-family: monospace }
+
+/* auth: */
+form .error { color: red }
+form .openid_url {
+  background: #FFFFFF url('/openid-login-bg.gif') no-repeat scroll 0pt 50%;
+  padding-left: 18px;
+}
