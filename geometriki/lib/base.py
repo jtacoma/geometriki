@@ -17,7 +17,7 @@
 
 Provides the BaseController class for subclassing.
 """
-from pylons import session, tmpl_context as c
+from pylons import session, tmpl_context as c, url
 from pylons.controllers import WSGIController
 from pylons.controllers.util import redirect
 from pylons.templating import render_mako as render
