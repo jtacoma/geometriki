@@ -17,10 +17,10 @@ import logging
 
 import openid.consumer.consumer
 from pylons import request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect, redirect_to
+from pylons.controllers.util import abort, redirect
 
 from geometriki.lib.base import BaseController, render
-from geometriki.lib.helpers import url_for
+from geometriki.lib.helpers import url
 
 log = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ class AuthController(BaseController):
         elif info.status == openid.consumer.consumer.SUCCESS:
             session['user'] = display_identifier
             session.save()
-            redirect_to(controller='pages', action='index')
+            redirect(url(controller='pages', action='index'))
         elif info.status == openid.consumer.consumer.CANCEL:
             c.error = 'Cancelled.'
             return render('/auth/login.mako')
@@ -75,4 +75,4 @@ class AuthController(BaseController):
         if 'user' in session:
             del session['user']
             session.save()
-        redirect_to(controller='auth', action='login')
+        redirect(url(controller='auth', action='login'))

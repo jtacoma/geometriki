@@ -20,6 +20,7 @@ full_stack = true
 static_files = true
 
 cache_dir = %(here)s/data
+pages_dir = %(here)s/wiki
 beaker.session.key = geometriki
 beaker.session.secret = ${app_instance_secret}
 app_instance_uuid = ${app_instance_uuid}

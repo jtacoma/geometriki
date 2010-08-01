@@ -19,7 +19,7 @@ Provides the BaseController class for subclassing.
 """
 from pylons import session, tmpl_context as c
 from pylons.controllers import WSGIController
-from pylons.controllers.util import redirect_to
+from pylons.controllers.util import redirect
 from pylons.templating import render_mako as render
 
 class BaseController(WSGIController):
@@ -37,4 +37,4 @@ class BaseController(WSGIController):
     def _authorize(self):
         user = session.get('user')
         if not user:
-            redirect_to(controller='auth', action='login')
+            redirect(url(controller='auth', action='login'))

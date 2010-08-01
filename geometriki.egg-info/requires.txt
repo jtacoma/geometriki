@@ -1,1 +1,3 @@
 Pylons>=0.9.7
+python-openid
+docutils

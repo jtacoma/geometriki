@@ -30,13 +30,13 @@
       <a href="http://gitorious.org/geometriki">geometriki</a>
 </%def>
 <%def name="navigation()">
-      <a href="${h.url_for('pages')}">pages</a>
+      <a href="${h.url('pages')}">pages</a>
 </%def>
 <%def name="actions()">
   <a href="mailto:joshua@yellowseed.org">feedback</a>
   % if c.user:
-    <a href="${h.url_for(controller='auth', action='logout')}">logout ${c.user}</a>
+    <a href="${h.url(controller='auth', action='logout')}">logout ${c.user}</a>
   % else:
-    <a href="${h.url_for(controller='auth', action='login')}">login</a>
+    <a href="${h.url(controller='auth', action='login')}">login</a>
   % endif
 </%def>

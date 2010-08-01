@@ -23,12 +23,14 @@ except ImportError:
 setup(
     name='geometriki',
     version='0.1',
-    description='',
-    author='',
-    author_email='',
+    description='Something like a semantic wiki based on tables embedded in the wiki pages.',
+    author='Joshua Tacoma',
+    author_email='joshua@yellowseed.org',
     url='',
     install_requires=[
         "Pylons>=0.9.7",
+        "python-openid",
+        "docutils",
     ],
     setup_requires=["PasteScript>=1.6.3"],
     packages=find_packages(exclude=['ez_setup']),

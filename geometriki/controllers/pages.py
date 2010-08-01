@@ -16,8 +16,8 @@
 import json
 import logging
 
-from pylons import request, response, session, tmpl_context as c
-from pylons.controllers.util import abort, redirect_to
+from pylons import request, response, session, tmpl_context as c, url
+from pylons.controllers.util import abort, redirect
 
 from geometriki.lib.base import BaseController, render
 from geometriki.model.pages import get_page, get_page_list, PageCreateForm, PageUpdateForm
@@ -61,7 +61,7 @@ class PagesController(BaseController):
         page = get_page(name)
         page.content = form_result.get('content')
         page.save()
-        redirect_to(controller='pages', action='show', id=name)
+        redirect(url(controller='pages', action='show', id=name))
 
     def new(self, format='html'):
         """GET /pages/new: Form to create a new item"""
@@ -87,7 +87,7 @@ class PagesController(BaseController):
         page = get_page(id)
         page.content = form_result.get('content')
         page.save()
-        redirect_to(controller='pages', action='show', id=id)
+        redirect(url(controller='pages', action='show', id=id))
 
     def delete(self, id):
         """DELETE /pages/id: Delete an existing item"""
