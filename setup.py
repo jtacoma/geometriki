@@ -13,6 +13,13 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with geometriki, in a file named COPYING. If not,
 # see <http://www.gnu.org/licenses/>.
+"""A Pylons web application centred on a semantic wiki.
+
+**geometriki** is a Pylons web application centered on a semantic wiki
+with two distinguishing features: first, each page with structured
+content can also be viewed as a data source; second, specialized
+queries can be executed over these data sources.
+"""
 try:
     from setuptools import setup, find_packages
 except ImportError:
@@ -22,7 +29,7 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.2',
+    version='0.1.3',
     description='Something like a semantic wiki based on tables embedded in the wiki pages.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',
@@ -50,4 +57,16 @@ setup(
     [paste.app_install]
     main = pylons.util:PylonsInstaller
     """,
+    classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
+        "Environment :: Web Environment",
+        "Framework :: Pylons",
+        "Intended Audience :: Other Audience",
+        "License :: OSI Approved :: GNU Affero General Public License v3",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    ],
+    long_description='\n'.join(__doc__.split('\n')[2:]),
 )

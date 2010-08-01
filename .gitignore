@@ -4,6 +4,7 @@ pages/*
 build/*
 dist/*
 doc/.build/*
+*.egg-info/
 
 # Python
 *.pyc
