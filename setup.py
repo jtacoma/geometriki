@@ -22,11 +22,11 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1',
+    version='0.1.1',
     description='Something like a semantic wiki based on tables embedded in the wiki pages.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',
-    url='',
+    url='http://gitorious.org/geometriki',
     install_requires=[
         "Pylons>=0.9.7",
         "python-openid",
