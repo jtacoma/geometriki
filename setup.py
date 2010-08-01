@@ -22,7 +22,7 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.1',
+    version='0.1.2',
     description='Something like a semantic wiki based on tables embedded in the wiki pages.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',

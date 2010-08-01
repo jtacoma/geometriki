@@ -18,7 +18,6 @@ import os
 
 import formencode
 from pylons import config
-from textile import textile
 
 from geometriki.lib.helpers import rst2html, rst2data
 
