@@ -1,9 +1,6 @@
 <%inherit file="/base.mako" />
 <%def name="title()">Authenticate</%def>
 ${h.form(url(controller='auth', action='verify'), method='post')}
-  % if c.error:
-    <div class="error">${c.error}</div>
-  % endif
   <label for="openid_url">
     OpenID:
     <a href="http://openid.net/get-an-openid">What is this?</a>

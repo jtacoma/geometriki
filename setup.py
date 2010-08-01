@@ -35,7 +35,7 @@ setup(
     author_email='joshua@yellowseed.org',
     url='http://gitorious.org/geometriki',
     install_requires=[
-        "Pylons>=0.9.7",
+        "Pylons>=1.0",
         "python-openid",
         "docutils",
     ],

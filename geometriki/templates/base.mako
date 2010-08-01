@@ -5,6 +5,7 @@
     <title>${self.title()}</title>
     <link rel="stylesheet" type="text/css" href="/reset-fonts-grids.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheet.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/print.css" />
     ${self.head_tags()}
   </head>
   <body>
@@ -17,26 +18,36 @@
 </html>
 <%def name="head_tags()"></%def>
 <%def name="head()">
-      <div id="navigation-menu">
-        navigation:
-        ${self.navigation()}
-      </div>
-      <div id="actions-menu">
-        actions:
-        ${self.actions()}
-      </div>
+  <ul id="navigation-menu" class="menu">
+		<li class="head">navigation:</li>
+    ${self.navigation()}
+  </ul>
+  <ul id="actions-menu" class="menu">
+		<li class="head">actions:</li>
+    ${self.actions()}
+  </ul>
+  % if c.errors or c.messages:
+  <ul id="messages">
+    % for msg in c.messages:
+    <li class="message">${msg}</li>
+    % endfor
+    % for err in c.errors:
+    <li class="error">${err}</li>
+    % endfor
+  </ul>
+  % endif
 </%def>
 <%def name="foot()">
-      <a href="http://gitorious.org/geometriki">geometriki</a>
+	[powered by <a href="http://pypi.python.org/pypi/geometriki">geometriki</a>]
 </%def>
 <%def name="navigation()">
-      <a href="${h.url('pages')}">pages</a>
+	<li><a href="${h.url('pages')}">pages</a></li>
 </%def>
 <%def name="actions()">
-  <a href="mailto:joshua@yellowseed.org">feedback</a>
+	<li><a href="mailto:joshua@yellowseed.org">feedback</a></li>
   % if c.user:
-    <a href="${h.url(controller='auth', action='logout')}">logout ${c.user}</a>
+	<li><a href="${h.url(controller='auth', action='logout')}" title="${c.user}">logout</a></li>
   % else:
-    <a href="${h.url(controller='auth', action='login')}">login</a>
+	<li></li><a href="${h.url(controller='auth', action='login')}">login</a></li>
   % endif
 </%def>

@@ -36,17 +36,17 @@ class AuthController(BaseController):
         try:
             oid_request = consumer.begin(form_openid)
         except openid.consumer.consumer.DiscoveryFailure, exception:
-            c.error = exception[0]
+            c.errors.append(exception[0])
             return render('/auth/login.mako')
         if oid_request is None:
-            c.error = 'No openid services found for ' + form_openid
+            c.errors.append('No openid services found for ' + form_openid)
             return render('/auth/login.mako')
         return_to = request.url.replace('verify', 'process')
         if oid_request.shouldSendRedirect():
             url = oid_request.redirectURL(return_to, return_to)
             return redirect(url)
         else:
-            c.error = 'python-openid did not recommend redirecting you to your OpenId provider.'
+            c.errors.append('python-openid did not recommend redirecting you to your OpenId provider.')
             return render('/auth/login.mako')
 
     def process(self):
@@ -55,24 +55,26 @@ class AuthController(BaseController):
         info = consumer.complete(request.params, return_to)
         display_identifier = info.getDisplayIdentifier()
         if info.status == openid.consumer.consumer.FAILURE and display_identifier:
-            c.error = display_identifier + ' : ' + info.message
+            c.errors.append(display_identifier + ' : ' + info.message)
             return render('/auth/login.mako')
         elif info.status == openid.consumer.consumer.SUCCESS:
             session['user'] = display_identifier
+            session['messages'].append('Logged in as ' + display_identifier)
             session.save()
             redirect(url(controller='pages', action='index'))
         elif info.status == openid.consumer.consumer.CANCEL:
-            c.error = 'Cancelled.'
+            c.errors.append('Cancelled.')
             return render('/auth/login.mako')
         elif info.status == openid.consumer.consumer.SETUP_NEEDED:
-            c.error = 'Setup needed: ' + info.setup_url
+            c.errors.append('Setup needed: ' + info.setup_url)
             return render('/auth/login.mako')
         else:
-            c.error = 'Verification failed.'
+            c.errors.append('Verification failed.')
             return render('/auth/login.mako')
 
     def logout(self):
         if 'user' in session:
             del session['user']
+            session['messages'].append('Logged out')
             session.save()
         redirect(url(controller='auth', action='login'))

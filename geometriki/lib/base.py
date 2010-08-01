@@ -26,6 +26,11 @@ class BaseController(WSGIController):
 
     def __before__(self, action, **params):
         c.user = session.get('user')
+        c.messages = session.get('messages', [])
+        c.errors = session.get('errors', [])
+        session['messages'] = []
+        session['errors'] = []
+        session.save()
 
     def __call__(self, environ, start_response):
         """Invoke the Controller"""

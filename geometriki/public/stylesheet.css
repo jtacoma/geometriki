@@ -18,10 +18,17 @@ blockquote { margin: 1em; padding: 1em; border: 2px solid #eee }
 /* header and footer: diminished visibility, separation from content, some items float right */
 #hd, #ft { color: #444; }
 #hd a, #ft a { color: #448; }
-#hd { padding-bottom: 0.5em; text-align: right; }
-#hd #navigation-menu, #actions-menu { display: inline; padding-left: 1em; }
+#hd { text-align: right; }
+#hd .menu { display: inline; padding-left: 1em; margin-bottom: 0.5em; }
+#hd .menu li { display: inline; }
+#hd .menu li.head:before { content: ""; }
+#hd .menu li.head:after { content: ""; }
+#hd .menu li:before { content: "["; }
+#hd .menu li:after { content: "]"; }
+#hd #messages { clear: both; text-align: left; background: #ddd; }
 html, body { background: #eee }
 #bd { background: #fff; padding: 1em; border: 2px solid #ddd }
+#ft { text-align: center; }
 
 /* links: a tad less ugly */
 a { text-decoration: none; }
@@ -43,9 +50,10 @@ thead { border-bottom: 2px solid black }
 /* forms: */
 textarea { width: 100%; font-family: monospace }
 
-/* auth: */
-form .error { color: red }
+/* ...other custom styles... */
+
 form .openid_url {
   background: #FFFFFF url('/openid-login-bg.gif') no-repeat scroll 0pt 50%;
   padding-left: 18px;
 }
+.error { color: red }

@@ -1,7 +1,7 @@
 <%inherit file="/pages/base.mako" />
 <%def name="title()">Pages</%def>
 <%def name="actions()">
-<a href="${url('new_page')}">create page</a>
+<li><a href="${url('new_page')}">create page</a></li>
 ${parent.actions()}
 </%def>
 % for page in c.all_pages:
