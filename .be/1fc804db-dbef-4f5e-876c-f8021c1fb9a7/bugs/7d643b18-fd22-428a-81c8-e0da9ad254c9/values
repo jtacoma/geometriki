@@ -1,0 +1,17 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: pages_dir should be created if it doesn't exist
+
+
+time: Mon, 02 Aug 2010 15:45:20 +0000
+

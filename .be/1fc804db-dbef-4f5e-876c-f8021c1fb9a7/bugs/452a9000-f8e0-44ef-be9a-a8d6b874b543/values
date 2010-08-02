@@ -1,0 +1,17 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: page save should detect whether source was modified.
+
+
+time: Mon, 02 Aug 2010 16:25:08 +0000
+

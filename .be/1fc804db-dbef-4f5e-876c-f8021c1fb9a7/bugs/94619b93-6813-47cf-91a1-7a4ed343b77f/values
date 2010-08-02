@@ -10,8 +10,8 @@ severity: minor
 status: open
 
 
-summary: '1.0'
+summary: rst2data should parse embedded yaml/json blocks.
 
 
-time: Mon, 02 Aug 2010 15:33:41 +0000
+time: Mon, 02 Aug 2010 16:08:35 +0000
 

@@ -1,0 +1,17 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: showing non-existing page should prompt/redirect to create.
+
+
+time: Mon, 02 Aug 2010 16:06:40 +0000
+
