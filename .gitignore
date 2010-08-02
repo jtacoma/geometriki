@@ -3,7 +3,8 @@ data/*
 pages/*
 build/*
 dist/*
-doc/.build/*
+docs/_build/*
+docs/
 *.egg-info/
 
 # Python

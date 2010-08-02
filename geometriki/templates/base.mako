@@ -48,6 +48,6 @@
   % if c.user:
 	<li><a href="${h.url(controller='auth', action='logout')}" title="${c.user}">logout</a></li>
   % else:
-	<li></li><a href="${h.url(controller='auth', action='login')}">login</a></li>
+	<li><a href="${h.url(controller='auth', action='login')}">login</a></li>
   % endif
 </%def>
