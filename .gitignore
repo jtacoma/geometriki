@@ -4,7 +4,6 @@ pages/*
 build/*
 dist/*
 docs/_build/*
-docs/
 *.egg-info/
 
 # Python

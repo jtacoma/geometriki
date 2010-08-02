@@ -13,4 +13,10 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with geometriki, in a file named COPYING. If not,
 # see <http://www.gnu.org/licenses/>.
+"""The top-level module of the geometriki web application.
 
+The geometriki web application is a collection of python modules
+building on the Pylons web application framework, along with many
+others, to produce a semantic wiki based on embedding tables in
+the wiki pages.
+"""
