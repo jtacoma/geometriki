@@ -1,6 +1,8 @@
-# Pylons/Geometriki
-data/*
+# Geometriki
 pages/*
+data/*
+
+# Pylons
 build/*
 dist/*
 docs/_build/*
@@ -9,6 +11,7 @@ docs/_build/*
 # Python
 *.pyc
 *.pyo
+*.egg
 
 # Generic
 *~
