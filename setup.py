@@ -16,9 +16,8 @@
 """A Pylons web application centred on a semantic wiki.
 
 **geometriki** is a web application centered on a semantic wiki or
-literate database encoded in the tables embedded in each page.
-Each page can be requested in HTML, JSON, or raw TXT (reStructuredText)
-formats.
+literate database encoded in the tables embedded in each page, which
+can be also be requested in JSON format.
 """
 try:
     from setuptools import setup, find_packages
