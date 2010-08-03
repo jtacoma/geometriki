@@ -15,10 +15,10 @@
 # see <http://www.gnu.org/licenses/>.
 """A Pylons web application centred on a semantic wiki.
 
-**geometriki** is a Pylons web application centered on a semantic wiki
-with two distinguishing features: first, each page with structured
-content can also be viewed as a data source; second, specialized
-queries can be executed over these data sources.
+**geometriki** is a web application centered on a semantic wiki or
+literate database encoded in the tables embedded in each page.
+Each page can be requested in HTML, JSON, or raw TXT (reStructuredText)
+formats.
 """
 try:
     from setuptools import setup, find_packages
@@ -29,8 +29,8 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.4',
-    description='Something like a semantic wiki based on tables embedded in the wiki pages.',
+    version='0.1.5',
+    description='A semantic wiki or literate database encoded in the tables embedded in each page.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',
     url='http://gitorious.org/geometriki',
