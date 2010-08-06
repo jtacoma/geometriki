@@ -14,8 +14,8 @@ severity: minor
 status: open
 
 
-summary: pages_dir should be created if it doesn't exist
+summary: default action at "/" should redirect instead of add ambiguous resource URI.
 
 
-time: Mon, 02 Aug 2010 15:45:20 +0000
+time: Fri, 06 Aug 2010 14:17:56 +0000
 
