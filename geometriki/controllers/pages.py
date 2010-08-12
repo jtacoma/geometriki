@@ -47,10 +47,11 @@ class PagesController(BaseController):
         else:
             return render('/pages/index.mako')
 
-    def create(self):
+    def create(self, *args, **kwargs):
         """POST /pages: Create a new item"""
         # url('pages')
         self._authorize()
+        log.debug('create(*%r, **%r)' % (args, kwargs))
         schema = PageCreateForm()
         try:
             form_result = schema.to_python(dict(request.params))
@@ -60,16 +61,22 @@ class PagesController(BaseController):
         name = form_result.get('name')
         page = get_page(name)
         page.content = form_result.get('content')
-        page.save()
-        redirect(url(controller='pages', action='show', id=name))
+        if form_result.get('preview'):
+            c.page = page
+            return render('/pages/new.mako')
+        else:
+            page.save()
+            redirect(url(controller='pages', action='show', id=name))
 
-    def new(self, format='html'):
+    def new(self, format='html', id=''):
         """GET /pages/new: Form to create a new item"""
         # url('new_page')
         self._authorize()
+        log.debug('new(id=%r)' % id)
+        c.page = get_page(id)
         return render('/pages/new.mako')
 
-    def update(self, id):
+    def update(self, id, *args, **kwargs):
         """PUT /pages/id: Update an existing item"""
         # Forms posted to this method should contain a hidden field:
         #    <input type="hidden" name="_method" value="PUT" />
@@ -78,16 +85,22 @@ class PagesController(BaseController):
         #           method='put')
         # url('page', id=ID)
         self._authorize()
+        log.debug('create(id=%r, *%r, **%r)' % (id, args, kwargs))
         schema = PageUpdateForm()
         try:
             form_result = schema.to_python(dict(request.params))
         except formencode.Invalid, error:
             error_message = unicode(error)
             return error_message
+        log.debug('%r' % form_result)
         page = get_page(id)
         page.content = form_result.get('content')
-        page.save()
-        redirect(url(controller='pages', action='show', id=id))
+        if form_result.get('preview'):
+            c.page = page
+            return render('/pages/edit.mako')
+        else:
+            page.save()
+            redirect(url(controller='pages', action='show', id=id))
 
     def delete(self, id):
         """DELETE /pages/id: Delete an existing item"""
@@ -98,12 +111,15 @@ class PagesController(BaseController):
         #           method='delete')
         # url('page', id=ID)
         self._authorize()
+        return 'Sorry, this is not implemented yet.'
 
     def show(self, id, format='html'):
         """GET /pages/id: Show a specific item"""
         # url('page', id=ID)
         page = get_page(id)
-        if format=='json':
+        if not page.exists():
+            redirect(url(controller='pages', action='new', id=id))
+        elif format=='json':
             response.content_type = 'application/json'
             data = page.get_structured_content()
             return json.dumps(data, **self.json_args)

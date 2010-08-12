@@ -28,11 +28,16 @@ class Page (object):
         self.name = name
         self.title = title or name
 
+    def exists(self):
+        return os.path.exists(self.path)
+
     def get_raw_content(self):
+        if hasattr(self, 'content'): return self.content
+        if not self.exists(): return None
         return codecs.open(self.path, 'r', 'utf-8').read()
 
     def get_formatted_content(self):
-        content = codecs.open(self.path, 'r', 'utf-8').read()
+        content = self.get_raw_content()
         formatted = rst2html(content)
         return formatted
 
@@ -41,9 +46,15 @@ class Page (object):
         data = rst2data(content)
         return data
 
+    def has_changes(self):
+        return hasattr(self, 'content')
+
     def save(self):
         if hasattr(self, 'content'):
-            codecs.open(self.path, 'w', 'utf-8').write(self.content)
+            _ensure_pages_dir()
+            f = codecs.open(self.path, mode='w', encoding='utf-8')
+            f.write(self.content)
+            f.close()
             del self.content
 
     def __unicode__(self):
@@ -60,13 +71,18 @@ def get_page_list():
 def get_page(name):
     return Page(name)
 
+def _ensure_pages_dir():
+    pages_dir = config['pages_dir']
+    if not os.path.exists(pages_dir):
+        os.makedirs(pages_dir)
+
 class PageUpdateForm (formencode.Schema):
     allow_extra_fields = True
-    filter_extra_fields = True
+    filter_extra_fields = False
     content = formencode.validators.String()
 
 class PageCreateForm (formencode.Schema):
     allow_extra_fields = True
-    filter_extra_fields = True
+    filter_extra_fields = False
     name = formencode.validators.String()
     content = formencode.validators.String()
