@@ -7,7 +7,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: pages_dir should be created if it doesn't exist

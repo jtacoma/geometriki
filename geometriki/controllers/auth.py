@@ -60,8 +60,11 @@ class AuthController(BaseController):
         elif info.status == openid.consumer.consumer.SUCCESS:
             session['user'] = display_identifier
             session['messages'].append('Logged in as ' + display_identifier)
+            target = session.get('post_login_redirect', '/')
+            if target:
+                session['post_login_redirect'] = ''
             session.save()
-            redirect(url(controller='pages', action='index'))
+            redirect(target)
         elif info.status == openid.consumer.consumer.CANCEL:
             c.errors.append('Cancelled.')
             return render('/auth/login.mako')

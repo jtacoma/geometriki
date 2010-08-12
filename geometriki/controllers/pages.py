@@ -63,10 +63,12 @@ class PagesController(BaseController):
         page.save()
         redirect(url(controller='pages', action='show', id=name))
 
-    def new(self, format='html'):
+    def new(self, format='html', id=''):
         """GET /pages/new: Form to create a new item"""
         # url('new_page')
         self._authorize()
+        log.debug('new(id=%r)' % id)
+        c.suggested_name = id
         return render('/pages/new.mako')
 
     def update(self, id):
@@ -98,12 +100,15 @@ class PagesController(BaseController):
         #           method='delete')
         # url('page', id=ID)
         self._authorize()
+        return 'Sorry, this is not implemented yet.'
 
     def show(self, id, format='html'):
         """GET /pages/id: Show a specific item"""
         # url('page', id=ID)
         page = get_page(id)
-        if format=='json':
+        if not page.exists():
+            redirect(url(controller='pages', action='new', id=id))
+        elif format=='json':
             response.content_type = 'application/json'
             data = page.get_structured_content()
             return json.dumps(data, **self.json_args)

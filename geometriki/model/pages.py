@@ -28,22 +28,31 @@ class Page (object):
         self.name = name
         self.title = title or name
 
+    def exists(self):
+        return os.path.exists(self.path)
+
     def get_raw_content(self):
+        if not self.exists(): return None
         return codecs.open(self.path, 'r', 'utf-8').read()
 
     def get_formatted_content(self):
+        if not self.exists(): return None
         content = codecs.open(self.path, 'r', 'utf-8').read()
         formatted = rst2html(content)
         return formatted
 
     def get_structured_content(self):
+        if not self.exists(): return None
         content = self.get_raw_content()
         data = rst2data(content)
         return data
 
     def save(self):
         if hasattr(self, 'content'):
-            codecs.open(self.path, 'w', 'utf-8').write(self.content)
+            _ensure_pages_dir()
+            f = codecs.open(self.path, mode='w', encoding='utf-8')
+            f.write(self.content)
+            f.close()
             del self.content
 
     def __unicode__(self):
@@ -59,6 +68,11 @@ def get_page_list():
 
 def get_page(name):
     return Page(name)
+
+def _ensure_pages_dir():
+    pages_dir = config['pages_dir']
+    if not os.path.exists(pages_dir):
+        os.makedirs(pages_dir)
 
 class PageUpdateForm (formencode.Schema):
     allow_extra_fields = True
