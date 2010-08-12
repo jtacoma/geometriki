@@ -32,20 +32,22 @@ class Page (object):
         return os.path.exists(self.path)
 
     def get_raw_content(self):
+        if hasattr(self, 'content'): return self.content
         if not self.exists(): return None
         return codecs.open(self.path, 'r', 'utf-8').read()
 
     def get_formatted_content(self):
-        if not self.exists(): return None
-        content = codecs.open(self.path, 'r', 'utf-8').read()
+        content = self.get_raw_content()
         formatted = rst2html(content)
         return formatted
 
     def get_structured_content(self):
-        if not self.exists(): return None
         content = self.get_raw_content()
         data = rst2data(content)
         return data
+
+    def has_changes(self):
+        return hasattr(self, 'content')
 
     def save(self):
         if hasattr(self, 'content'):
@@ -76,11 +78,11 @@ def _ensure_pages_dir():
 
 class PageUpdateForm (formencode.Schema):
     allow_extra_fields = True
-    filter_extra_fields = True
+    filter_extra_fields = False
     content = formencode.validators.String()
 
 class PageCreateForm (formencode.Schema):
     allow_extra_fields = True
-    filter_extra_fields = True
+    filter_extra_fields = False
     name = formencode.validators.String()
     content = formencode.validators.String()

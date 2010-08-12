@@ -14,6 +14,7 @@ h4, h5, h6 { font-size: 108% }
 p, table { margin: 0.5em 0 }
 strong { font-weight: bolder }
 blockquote { margin: 1em; padding: 1em; border: 2px solid #eee }
+textarea { padding-left: 3px }
 
 /* header and footer: diminished visibility, separation from content, some items float right */
 #hd, #ft { color: #444; }

@@ -1,0 +1,18 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: yaml/json representation should not enforce any particular key, and should
+  include metadata about recognized columns.
+
+
+time: Thu, 12 Aug 2010 21:06:53 +0000
+
