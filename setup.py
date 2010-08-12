@@ -28,7 +28,7 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.5',
+    version='0.1.6',
     description='A semantic wiki or literate database encoded in the tables embedded in each page.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',
