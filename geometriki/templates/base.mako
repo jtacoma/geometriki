@@ -3,6 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>${self.title()}</title>
+    <script type="text/javascript" src="/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/geometriki.js"></script>
     <link rel="stylesheet" type="text/css" href="/reset-fonts-grids.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheet.css" />
     <link rel="stylesheet" type="text/css" media="print" href="/print.css" />
@@ -26,7 +28,7 @@
 		<li class="head">actions:</li>
     ${self.actions()}
   </ul>
-  % if c.errors or c.messages:
+  % if c.errors or c.messages or True:
   <ul id="messages">
     % for msg in c.messages:
     <li class="message">${msg}</li>

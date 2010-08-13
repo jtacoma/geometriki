@@ -15,6 +15,7 @@
 # see <http://www.gnu.org/licenses/>.
 import docutils.core
 import docutils.parsers.rst
+import json
 
 def rst2html(txt):
     inliner = docutils.parsers.rst.states.Inliner()
@@ -45,13 +46,13 @@ def rst2data(txt):
             queue.extend(node.childNodes)
     all_parsed = []
     records = []
+    meta = {}
     for table in all_tables:
         tgroup = table.childNodes[0]
         keys = [[] for n in tgroup.childNodes if n.localName == 'colspec']
         thead = tgroup.childNodes[len(keys)]
         # a grid of column headers:
         heads = [[None for row in thead.childNodes] for k in keys]
-        arity = {}
         for rowindex, row in enumerate(thead.childNodes):
             row_items = []
             coloffset = 0
@@ -67,24 +68,28 @@ def rst2data(txt):
                 else:
                     rowspan = 1
                 name = th.childNodes[0].childNodes[0].nodeValue
-                arity[name] = arity.get(name, 0) + colspan
                 for ci in range(colindex+coloffset, colindex+coloffset+colspan):
                     heads[ci][rowindex] = name
                     for ri in range(rowindex+1, rowindex+rowspan):
                         heads[ci][ri] = ''
+                thusfar = '.'.join(r for r in heads[colindex] if r)
+                meta[thusfar] = meta.get(thusfar, 0) + colspan
         names = ['.'.join(r for r in col if r) for col in heads]
-        for name in arity:
+        for name in list(meta.keys()):
             if name not in names:
-                del arity[name]
+                del meta[name]
         tbody = tgroup.childNodes[len(keys)+1]
         for row in tbody.childNodes:
             values = [td.childNodes[0].childNodes[0].nodeValue for td in row.childNodes]
             record = {}
             for pair in zip(names, values):
-                if arity[pair[0]] > 1:
+                if meta[pair[0]] > 1:
                     record[pair[0]] = record.get(pair[0], []) + [pair[1]]
                 else:
                     record[pair[0]] = pair[1]
             records.append(record)
-    return dict(meta=arity, records=records)
+    return dict(meta=meta, records=records)
 
+def rst2json(txt):
+    data = rst2data(txt)
+    return json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True)

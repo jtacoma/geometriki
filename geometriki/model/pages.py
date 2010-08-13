@@ -19,7 +19,7 @@ import os
 import formencode
 from pylons import config
 
-from geometriki.lib.helpers import rst2html, rst2data
+from geometriki.lib.rst import rst2html, rst2json
 
 class Page (object):
 
@@ -43,13 +43,42 @@ class Page (object):
         formatted = rst2html(content)
         return formatted
 
-    def get_structured_content(self):
+    def get_javascript_content(self):
+        try:
+            script = r'''$(function () {
+                if (!("page" in geometriki)) geometriki.page = {};
+                geometriki.page.name = "%(name)s";
+                geometriki.message("JavaScript loaded for page \"" + geometriki.page.name + "\".");
+                $("#play").append("There's actually nothing implemented here yet.  It's just another ridiculously awesome idea under development.");
+            });''' % dict(name=self.name)
+        except:
+            script = r'''$(function () {
+                geometriki.error("Failed to load JavaScript for page \"%(name)s\".");
+            });''' % dict(name=self.name)
+        return script
+
+    def get_json_content(self):
         content = self.get_raw_content()
         if content:
-            data = rst2data(content)
+            json = rst2json(content)
         else:
-            data = {}
-        return data
+            json = 'null'
+        return json
+
+    def get_json_content_embedded(self):
+        'Formatted content (JSON) but designed for embedding in a larger page.'
+        try:
+            json = self.get_json_content()
+            script = r'''$(function() {
+                if (!("page" in geometriki)) geometriki.page = {};
+                geometriki.page.data = %(json)s;
+                geometriki.message("JSON data loaded for page \"" + geometriki.page.name + "\"");
+            });''' % dict(json=json)
+        except:
+            script = r'''$(function () {
+                geometriki.error("Failed to load JSON data for page \"%(name)s\".");
+            });''' % dict(name=self.name)
+        return script
 
     def has_changes(self):
         return hasattr(self, 'content')

@@ -13,11 +13,13 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with geometriki, in a file named COPYING. If not,
 # see <http://www.gnu.org/licenses/>.
-"""A collaborative javascript development environment.
+"""A collaborative JavaScript development environment.
 
-**geometriki** is a wiki in which each page can be processed either for
-people to read (HTML, PDF) or for machines to process (JSON,
-JavaScript).
+**geometriki** is a **wiki** in which each page can be processed either
+for people to read (HTML, PDF) or for machines to process (**JSON** or
+**JavaScript**).  As a result, it is effectively a collaborative
+development environment for JavaScript applications, especially those
+that can be useful without frequent updates to server-side data.
 """
 try:
     from setuptools import setup, find_packages
@@ -28,7 +30,7 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.7',
+    version='0.1.8',
     description='A semantic wiki or literate database encoded in the tables embedded in each page.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',

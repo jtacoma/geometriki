@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with geometriki, in a file named COPYING. If not,
 # see <http://www.gnu.org/licenses/>.
-import json
 import logging
 
 from pylons import request, response, session, tmpl_context as c, url
@@ -29,23 +28,12 @@ class PagesController(BaseController):
     # To properly map this controller, ensure your config/routing.py
     # file has a resource setup:
     #     map.resource('page', 'pages')
-    json_args = dict(ensure_ascii=False, indent=2, sort_keys=True)
 
     def index(self, format='html'):
         """GET /pages: All items in the collection"""
         # url('pages')
         c.all_pages = get_page_list()
-        if format=='json':
-            response.content_type = 'application/json'
-            return json.dumps([{'name': p.name} for p in c.all_pages], **self.json_args)
-        elif format=='yaml':
-            response.content_type = 'text/x-yaml'
-            return json.dumps([{'name': p.name} for p in c.all_pages], **self.json_args)
-        elif format=='txt':
-            response.content_type = 'text/plain'
-            return '\n'.join([p.name for p in c.all_pages])
-        else:
-            return render('/pages/index.mako')
+        return render('/pages/index.mako')
 
     def create(self):
         """POST /pages: Create a new item"""
@@ -113,20 +101,34 @@ class PagesController(BaseController):
         """GET /pages/id: Show a specific item"""
         # url('page', id=ID)
         page = get_page(id)
-        if format=='json':
+        # for html format, show page even if it does not exist:
+        if format=='html':
+            c.page = page
+            return render('/pages/show.mako')
+        # otherwise, if page does not exist, it is a 404:
+        if not page.exists() and not session['user']: abort(404)
+        if format=='js':
+            response.content_type = 'text/javascript'
+            script = page.get_javascript_content()
+            return script
+        elif format=='json':
             response.content_type = 'application/json'
-            data = page.get_structured_content()
-            return json.dumps(data, **self.json_args)
-        elif format=='yaml':
-            response.content_type = 'text/plain'
-            data = page.get_structured_content()
-            return json.dumps(data, **self.json_args)
+            json = page.get_json_content()
+            return json
+        elif format=='json_embedded':
+            response.content_type = 'text/javascript'
+            script = page.get_json_content_embedded()
+            return script
+        elif format=='play':
+            c.page = page
+            return render('/pages/play.mako')
         elif format=='txt':
             response.content_type = 'text/plain'
             return page.get_raw_content()
-        else:
-            c.page = page
-            return render('/pages/show.mako')
+        elif format=='yaml':
+            response.content_type = 'text/plain'
+            json = page.get_json_content()
+            return json
 
     def edit(self, id, format='html'):
         """GET /pages/id/edit: Form to edit an existing item"""

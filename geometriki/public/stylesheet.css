@@ -17,8 +17,8 @@ blockquote { margin: 1em; padding: 1em; border: 2px solid #eee }
 textarea { padding-left: 3px }
 
 /* header and footer: diminished visibility, separation from content, some items float right */
-#hd, #ft { color: #444; }
-#hd a, #ft a { color: #448; }
+#hd { color: #444; }
+#hd a { color: #44f; }
 #hd { text-align: right; }
 #hd .menu { display: inline; padding-left: 1em; margin-bottom: 0.5em; }
 #hd .menu li { display: inline; }
@@ -27,8 +27,11 @@ textarea { padding-left: 3px }
 #hd .menu li:before { content: "["; }
 #hd .menu li:after { content: "]"; }
 #hd #messages { clear: both; text-align: left; background: #ddd; }
+#hd #messages .error { color: #b00; }
 html, body { background: #eee }
 #bd { background: #fff; padding: 1em; border: 2px solid #ddd }
+#ft { color: #888; }
+#ft a { color: #88f; }
 #ft { text-align: center; }
 
 /* links: a tad less ugly */
