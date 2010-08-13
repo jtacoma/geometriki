@@ -47,11 +47,10 @@ class PagesController(BaseController):
         else:
             return render('/pages/index.mako')
 
-    def create(self, *args, **kwargs):
+    def create(self):
         """POST /pages: Create a new item"""
         # url('pages')
         self._authorize()
-        log.debug('create(*%r, **%r)' % (args, kwargs))
         schema = PageCreateForm()
         try:
             form_result = schema.to_python(dict(request.params))
@@ -72,7 +71,6 @@ class PagesController(BaseController):
         """GET /pages/new: Form to create a new item"""
         # url('new_page')
         self._authorize()
-        log.debug('new(id=%r)' % id)
         c.page = get_page(id)
         return render('/pages/new.mako')
 
@@ -85,14 +83,12 @@ class PagesController(BaseController):
         #           method='put')
         # url('page', id=ID)
         self._authorize()
-        log.debug('create(id=%r, *%r, **%r)' % (id, args, kwargs))
         schema = PageUpdateForm()
         try:
             form_result = schema.to_python(dict(request.params))
         except formencode.Invalid, error:
             error_message = unicode(error)
             return error_message
-        log.debug('%r' % form_result)
         page = get_page(id)
         page.content = form_result.get('content')
         if form_result.get('preview'):
@@ -117,9 +113,7 @@ class PagesController(BaseController):
         """GET /pages/id: Show a specific item"""
         # url('page', id=ID)
         page = get_page(id)
-        if not page.exists():
-            redirect(url(controller='pages', action='new', id=id))
-        elif format=='json':
+        if format=='json':
             response.content_type = 'application/json'
             data = page.get_structured_content()
             return json.dumps(data, **self.json_args)
