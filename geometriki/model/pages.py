@@ -24,17 +24,19 @@ from geometriki.lib.helpers import rst2html, rst2data
 class Page (object):
 
     def __init__(self, name, title=None, content=None):
-        self.path = os.path.join(config['pages_dir'], name)
         self.name = name
         self.title = title or name
 
+    def _get_path(self):
+        return os.path.join(config['pages_dir'], self.name)
+
     def exists(self):
-        return os.path.exists(self.path)
+        return self.name and os.path.exists(self._get_path())
 
     def get_raw_content(self):
         if hasattr(self, 'content'): return self.content
         if not self.exists(): return None
-        return codecs.open(self.path, 'r', 'utf-8').read()
+        return codecs.open(self._get_path(), 'r', 'utf-8').read()
 
     def get_formatted_content(self):
         content = self.get_raw_content()
@@ -43,7 +45,10 @@ class Page (object):
 
     def get_structured_content(self):
         content = self.get_raw_content()
-        data = rst2data(content)
+        if content:
+            data = rst2data(content)
+        else:
+            data = {}
         return data
 
     def has_changes(self):
@@ -52,7 +57,7 @@ class Page (object):
     def save(self):
         if hasattr(self, 'content'):
             _ensure_pages_dir()
-            f = codecs.open(self.path, mode='w', encoding='utf-8')
+            f = codecs.open(self._get_path(), mode='w', encoding='utf-8')
             f.write(self.content)
             f.close()
             del self.content

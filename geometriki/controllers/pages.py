@@ -47,7 +47,7 @@ class PagesController(BaseController):
         else:
             return render('/pages/index.mako')
 
-    def create(self, *args, **kwargs):
+    def create(self):
         """POST /pages: Create a new item"""
         # url('pages')
         self._authorize()
@@ -113,9 +113,7 @@ class PagesController(BaseController):
         """GET /pages/id: Show a specific item"""
         # url('page', id=ID)
         page = get_page(id)
-        if not page.exists():
-            redirect(url(controller='pages', action='new', id=id))
-        elif format=='json':
+        if format=='json':
             response.content_type = 'application/json'
             data = page.get_structured_content()
             return json.dumps(data, **self.json_args)
