@@ -13,11 +13,11 @@
 # You should have received a copy of the GNU Affero General Public
 # License along with geometriki, in a file named COPYING. If not,
 # see <http://www.gnu.org/licenses/>.
-"""A Pylons web application centred on a semantic wiki.
+"""A collaborative javascript development environment.
 
-**geometriki** is a web application centered on a semantic wiki or
-literate database encoded in the tables embedded in each page, which
-can be also be requested in JSON format.
+**geometriki** is a wiki in which each page can be processed either for
+people to read (HTML, PDF) or for machines to process (JSON,
+JavaScript).
 """
 try:
     from setuptools import setup, find_packages
