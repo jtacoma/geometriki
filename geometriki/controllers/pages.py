@@ -51,7 +51,6 @@ class PagesController(BaseController):
         """POST /pages: Create a new item"""
         # url('pages')
         self._authorize()
-        log.debug('create(*%r, **%r)' % (args, kwargs))
         schema = PageCreateForm()
         try:
             form_result = schema.to_python(dict(request.params))
@@ -72,7 +71,6 @@ class PagesController(BaseController):
         """GET /pages/new: Form to create a new item"""
         # url('new_page')
         self._authorize()
-        log.debug('new(id=%r)' % id)
         c.page = get_page(id)
         return render('/pages/new.mako')
 
@@ -85,14 +83,12 @@ class PagesController(BaseController):
         #           method='put')
         # url('page', id=ID)
         self._authorize()
-        log.debug('create(id=%r, *%r, **%r)' % (id, args, kwargs))
         schema = PageUpdateForm()
         try:
             form_result = schema.to_python(dict(request.params))
         except formencode.Invalid, error:
             error_message = unicode(error)
             return error_message
-        log.debug('%r' % form_result)
         page = get_page(id)
         page.content = form_result.get('content')
         if form_result.get('preview'):

@@ -44,13 +44,14 @@ def rst2data(txt):
         else:
             queue.extend(node.childNodes)
     all_parsed = []
-    docs = {}
+    records = []
     for table in all_tables:
         tgroup = table.childNodes[0]
         keys = [[] for n in tgroup.childNodes if n.localName == 'colspec']
         thead = tgroup.childNodes[len(keys)]
         # a grid of column headers:
         heads = [[None for row in thead.childNodes] for k in keys]
+        arity = {}
         for rowindex, row in enumerate(thead.childNodes):
             row_items = []
             coloffset = 0
@@ -66,14 +67,24 @@ def rst2data(txt):
                 else:
                     rowspan = 1
                 name = th.childNodes[0].childNodes[0].nodeValue
+                arity[name] = arity.get(name, 0) + colspan
                 for ci in range(colindex+coloffset, colindex+coloffset+colspan):
                     heads[ci][rowindex] = name
                     for ri in range(rowindex+1, rowindex+rowspan):
                         heads[ci][ri] = ''
         names = ['.'.join(r for r in col if r) for col in heads]
+        for name in arity:
+            if name not in names:
+                del arity[name]
         tbody = tgroup.childNodes[len(keys)+1]
         for row in tbody.childNodes:
             values = [td.childNodes[0].childNodes[0].nodeValue for td in row.childNodes]
-            docs[values[0]] = dict(zip(names, values))
-    return docs
+            record = {}
+            for pair in zip(names, values):
+                if arity[pair[0]] > 1:
+                    record[pair[0]] = record.get(pair[0], []) + [pair[1]]
+                else:
+                    record[pair[0]] = pair[1]
+            records.append(record)
+    return dict(meta=arity, records=records)
 

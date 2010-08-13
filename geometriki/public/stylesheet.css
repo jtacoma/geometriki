@@ -48,6 +48,10 @@ code {
 td, th { text-align: center; padding: 0 3px }
 thead { border-bottom: 2px solid black }
 
+/* docutils output */
+.system-messages { border: thin solid #f88 ; background: #fee }
+.system-message { border: thin solid #f00 ; background: #fee }
+
 /* forms: */
 textarea { width: 100%; font-family: monospace }
 
