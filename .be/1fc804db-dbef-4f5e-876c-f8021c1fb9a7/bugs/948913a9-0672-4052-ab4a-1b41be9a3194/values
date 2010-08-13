@@ -11,7 +11,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: default action at "/" should redirect instead of add ambiguous resource URI.

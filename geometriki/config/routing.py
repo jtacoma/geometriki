@@ -37,7 +37,7 @@ def make_map():
 
     map.resource('page', 'pages')
 
-    map.connect('/', controller='pages', action='show', id='welcome')
+    map.redirect('/', '/pages/%s' % config.get('front_page', 'welcome'))
     map.connect('/{controller}/{action}')
     map.connect('/{controller}/{action}/{id}')
 

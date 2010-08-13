@@ -7,7 +7,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: non-existing page should be 404 when not logged in.

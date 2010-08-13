@@ -7,7 +7,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: new page with empty name tries to load content from directory instead of

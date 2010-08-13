@@ -1,0 +1,17 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: embedded code blocks should be concatenated to generate javascript.
+
+
+time: Fri, 13 Aug 2010 23:26:39 +0000
+

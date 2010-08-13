@@ -7,7 +7,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: yaml/json representation should not enforce any particular key, and should
