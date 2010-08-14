@@ -48,6 +48,7 @@ def rst2data(txt):
     records = []
     meta = {}
     for table in all_tables:
+        meta = {}
         tgroup = table.childNodes[0]
         keys = [[] for n in tgroup.childNodes if n.localName == 'colspec']
         thead = tgroup.childNodes[len(keys)]
@@ -72,7 +73,7 @@ def rst2data(txt):
                     heads[ci][rowindex] = name
                     for ri in range(rowindex+1, rowindex+rowspan):
                         heads[ci][ri] = ''
-                thusfar = '.'.join(r for r in heads[colindex] if r)
+                thusfar = '.'.join(r for r in heads[colindex+coloffset] if r)
                 meta[thusfar] = meta.get(thusfar, 0) + colspan
         names = ['.'.join(r for r in col if r) for col in heads]
         for name in list(meta.keys()):
