@@ -30,8 +30,8 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.8',
-    description='A semantic wiki or literate database encoded in the tables embedded in each page.',
+    version='0.1.9',
+    description='A collaborative JavaScript development environment.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',
     url='http://gitorious.org/geometriki',
@@ -59,7 +59,7 @@ setup(
     main = pylons.util:PylonsInstaller
     """,
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Framework :: Pylons",
         "Intended Audience :: Other Audience",
