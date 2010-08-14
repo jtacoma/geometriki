@@ -20,5 +20,5 @@ available to Controllers. This module is available to templates as 'h'.
 """
 # Import helpers as desired, or define your own, ie:
 from pylons import url
-from webhelpers.html.tags import checkbox, end_form, form, password, radio, submit, text, textarea
+from webhelpers.html.tags import checkbox, end_form, form, hidden, password, radio, submit, text, textarea
 from geometriki.lib.rst import rst2html, rst2data

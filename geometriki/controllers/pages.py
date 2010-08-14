@@ -79,8 +79,13 @@ class PagesController(BaseController):
             return error_message
         page = get_page(id)
         page.content = form_result.get('content')
-        if form_result.get('preview'):
+        preview = form_result.get('preview')
+        if page.get_timestamp() and form_result.get('timestamp') != page.get_timestamp():
+            c.errors.append('This page was modified while you were editing it: your changes cannot be saved.')
+            preview = True
+        if preview:
             c.page = page
+            c.timestamp = form_result.get('timestamp')
             return render('/pages/edit.mako')
         else:
             page.save()
@@ -135,4 +140,5 @@ class PagesController(BaseController):
         # url('edit_page', id=ID)
         self._authorize()
         c.page = get_page(id)
+        c.timestamp = c.page.get_timestamp()
         return render('/pages/edit.mako')

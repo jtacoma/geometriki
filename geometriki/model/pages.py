@@ -34,6 +34,8 @@ class Page (object):
         return self.name and os.path.exists(self._get_path())
 
     def get_raw_content(self):
+        if '/' in self.name or self.name in ['.', '..']:
+            raise Exception("Hey now, just what do you think you're doing?")
         if hasattr(self, 'content'): return self.content
         if not self.exists(): return None
         return codecs.open(self._get_path(), 'r', 'utf-8').read()
@@ -84,10 +86,18 @@ class Page (object):
             });''' % dict(name=self.name)
         return script
 
+    def get_timestamp(self):
+        if self.exists():
+            return repr(os.stat(self._get_path()).st_mtime)
+        else:
+            return ''
+
     def has_changes(self):
         return hasattr(self, 'content')
 
     def save(self):
+        if '/' in self.name or self.name in ['.', '..']:
+            raise Exception("Hey now, just what do you think you're doing?")
         if hasattr(self, 'content'):
             _ensure_pages_dir()
             f = codecs.open(self._get_path(), mode='w', encoding='utf-8')

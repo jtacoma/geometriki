@@ -10,6 +10,7 @@
 ${h.form(url('page', id=c.page.name), method='put')}
   ${h.textarea('content', c.page.get_raw_content(), rows=25)}<br/>
   <a style="float:right" href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">ReStructuredText</a>
+  ${h.hidden('timestamp', c.timestamp)}
   ${h.submit('preview', 'Preview')}
   ${h.submit('save', 'Save')}
 ${h.end_form()}
