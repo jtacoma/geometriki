@@ -1,0 +1,18 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: python-openid "doesn't recommend redirecting" for some providers, what's
+  up with that?
+
+
+time: Sat, 14 Aug 2010 16:20:13 +0000
+

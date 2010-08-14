@@ -1,0 +1,18 @@
+creator: Joshua Tacoma <joshua@yellowseed.org>
+
+
+reporter: Joshua Tacoma <joshua@yellowseed.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: the "play" table orders column headers alphabetically instead of matching
+  source.
+
+
+time: Sat, 14 Aug 2010 15:57:50 +0000
+
