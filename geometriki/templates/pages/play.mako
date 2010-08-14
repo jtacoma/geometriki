@@ -12,6 +12,3 @@ ${parent.actions()}
 </%def>
 <div id="play">
 </div>
-<div id="page-formatted-content">
-  ${c.page.get_formatted_content() | n}
-</div>

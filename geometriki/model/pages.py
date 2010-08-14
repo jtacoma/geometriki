@@ -45,15 +45,16 @@ class Page (object):
 
     def get_javascript_content(self):
         try:
+            # this is basically a no-op... maybe it doesn't make sense after all?
             script = r'''$(function () {
+                if (typeof(geometriki) == "undefined") geometriki = {};
                 if (!("page" in geometriki)) geometriki.page = {};
                 geometriki.page.name = "%(name)s";
-                geometriki.message("JavaScript loaded for page \"" + geometriki.page.name + "\".");
-                $("#play").append("There's actually nothing implemented here yet.  It's just another ridiculously awesome idea under development.");
+                geometriki.message("JavaScript loaded for page <strong>" + geometriki.page.name + "</strong>.");
             });''' % dict(name=self.name)
         except:
             script = r'''$(function () {
-                geometriki.error("Failed to load JavaScript for page \"%(name)s\".");
+                geometriki.error("Failed to load JavaScript for <strong>%(name)s</strong>.");
             });''' % dict(name=self.name)
         return script
 
@@ -70,13 +71,16 @@ class Page (object):
         try:
             json = self.get_json_content()
             script = r'''$(function() {
+                if (typeof(geometriki) == "undefined") geometriki = {};
                 if (!("page" in geometriki)) geometriki.page = {};
+                geometriki.page.name = "%(name)s";
                 geometriki.page.data = %(json)s;
-                geometriki.message("JSON data loaded for page \"" + geometriki.page.name + "\"");
-            });''' % dict(json=json)
+                geometriki.message("JSON data loaded for <strong>" + geometriki.page.name + "</strong>.");
+                geometriki.play_begin();
+            });''' % dict(name=self.name, json=json)
         except:
             script = r'''$(function () {
-                geometriki.error("Failed to load JSON data for page \"%(name)s\".");
+                geometriki.error("Failed to load JSON data for <strong>%(name)s</strong>.");
             });''' % dict(name=self.name)
         return script
 
