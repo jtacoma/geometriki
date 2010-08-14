@@ -11,7 +11,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: wontfix
 
 
 summary: add listing of authorized openid_urls and enforce.

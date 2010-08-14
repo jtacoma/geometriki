@@ -11,7 +11,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: closed
 
 
 summary: rst2data errors should prevent saving page changes.
