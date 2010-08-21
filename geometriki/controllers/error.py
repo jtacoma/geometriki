@@ -17,11 +17,12 @@ import cgi
 
 from paste.urlparser import PkgResourcesParser
 from pylons import request
+from pylons import tmpl_context as c
 from pylons.controllers.util import forward
 from pylons.middleware import error_document_template
 from webhelpers.html.builder import literal
 
-from geometriki.lib.base import BaseController
+from geometriki.lib.base import BaseController, render
 
 class ErrorController(BaseController):
 
@@ -38,12 +39,16 @@ class ErrorController(BaseController):
     def document(self):
         """Render the error document"""
         resp = request.environ.get('pylons.original_response')
-        content = literal(resp.body) or cgi.escape(request.GET.get('message', ''))
-        page = error_document_template % \
-            dict(prefix=request.environ.get('SCRIPT_NAME', ''),
-                 code=cgi.escape(request.GET.get('code', str(resp.status_int))),
-                 message=content)
-        return page
+        code = cgi.escape(request.GET.get('code', ''))
+        message = cgi.escape(request.GET.get('message', ''))
+        if resp:
+            code = code or cgi.escape(str(resp.status_int))
+            message = literal(resp.status) or message
+        if not code:
+            raise Exception('No status code was found.')
+        c.code = code
+        c.message = message
+        return render('/derived/error/document.mako')
 
     def img(self, id):
         """Serve Pylons' stock images"""

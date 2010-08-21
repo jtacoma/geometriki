@@ -11,7 +11,7 @@
     ${self.head_tags()}
   </head>
   <body>
-    <div id="doc">
+    <div id="doc" class="${self.doctype()}">
       <div id="hd">${self.head()}</div> 
       <div id="bd">${self.body()}</div> 
       <div id="ft">${self.foot()}</div> 
@@ -39,14 +39,16 @@
   </ul>
   % endif
 </%def>
+<%def name="doctype()"></%def>
 <%def name="foot()">
-	[powered by <a href="http://pypi.python.org/pypi/geometriki">geometriki</a>]
+	<a href="mailto:joshua@yellowseed.org">contact</a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+	<a href="http://gitorious.org/geometriki">geometriki source code</a>
 </%def>
 <%def name="navigation()">
 	<li><a href="${h.url('pages')}">pages</a></li>
 </%def>
 <%def name="actions()">
-	<li><a href="mailto:joshua@yellowseed.org">feedback</a></li>
   % if c.user:
 	<li><a href="${h.url(controller='auth', action='logout')}" title="${c.user}">logout</a></li>
   % else:

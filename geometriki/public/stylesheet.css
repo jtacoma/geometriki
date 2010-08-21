@@ -65,3 +65,4 @@ form .openid_url {
   padding-left: 18px;
 }
 .error { color: red }
+.error #bd { color: black ; background: #fee; border: 2px solid #f00 }
