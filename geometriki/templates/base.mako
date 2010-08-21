@@ -30,6 +30,7 @@
   </ul>
   % if c.errors or c.messages or True:
   <ul id="messages">
+    ${self.messages()}
     % for msg in c.messages:
     <li class="message">${msg}</li>
     % endfor
@@ -39,7 +40,6 @@
   </ul>
   % endif
 </%def>
-<%def name="doctype()"></%def>
 <%def name="foot()">
 	<a href="mailto:joshua@yellowseed.org">contact</a>
   &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -55,3 +55,5 @@
 	<li><a href="${h.url(controller='auth', action='login')}">login</a></li>
   % endif
 </%def>
+<%def name="doctype()"></%def>
+<%def name="messages()"></%def>

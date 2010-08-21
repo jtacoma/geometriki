@@ -84,11 +84,12 @@ def rst2data(txt):
         for row in tbody.childNodes:
             values = [td.childNodes[0].childNodes[0].nodeValue for td in row.childNodes]
             record = {}
-            for pair in zip(names, values):
-                if meta[pair[0]] > 1:
-                    record[pair[0]] = record.get(pair[0], []) + [pair[1]]
+            for name, value in zip(names, values):
+                if value.isdigit(): value = int(value)
+                if meta[name] > 1:
+                    record[name] = record.get(name, []) + [value]
                 else:
-                    record[pair[0]] = pair[1]
+                    record[name] = value
             records.append(record)
     return dict(meta=meta, records=records)
 

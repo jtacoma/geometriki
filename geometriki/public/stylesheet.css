@@ -66,3 +66,5 @@ form .openid_url {
 }
 .error { color: red }
 .error #bd { color: black ; background: #fee; border: 2px solid #f00 }
+.subtotals { font-weight: bolder ; background: #eee; }
+.totals { font-weight: bolder ; background: #ddd; }

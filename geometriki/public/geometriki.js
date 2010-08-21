@@ -11,13 +11,14 @@ geometriki.error = function(content) {
   $("#messages").append("<li class=\"error\">" + content + "</li>");
 };
 
-geometriki.play_begin = function() {
+geometriki.play_begin = function(initial_text) {
   geometriki.update_index_from_page();
   if (!("index" in geometriki) || isEmpty(geometriki.index))
     geometriki.error("Failed to build index for <strong>" + geometriki.page.name + "</strong>: maybe it has no well-formed table.");
   else
   {
-    $("#play").append("<input class=\"play-input\" /><div id=\"play-output\" />");
+    $("#play").append("<input class=\"play-input\" value=\"" + initial_text + "\" /><div id=\"play-output\" />");
+    $("input.play-input").focus();
     $(".play-input").keyup(geometriki.play_respond);
     $(".play-input").mouseup(geometriki.play_respond);
     geometriki.play_respond();
@@ -26,23 +27,52 @@ geometriki.play_begin = function() {
 
 geometriki.play_respond = function() {
   $("#play-output").empty();
-  var text = $(".play-input").val();
-  if (text) {
-    $("#play-output").append("<table><thead><th></th></thead><tbody valign=\"top\"/></table>");
+  var spell = $(".play-input").val();
+  if (spell) {
+    $("#play-output").append("<table><thead><th>&nbsp;</th></thead><tbody valign=\"top\"/></table>");
     for (name in geometriki.page.data.meta)
       $("#play-output thead").append("<th>" + name + "</th>");
-    for (i in text) {
-      item = text[i];
-      row = "<td>" + item + "</td>";
-      if (item in geometriki.index) {
-        record = geometriki.index[item];
+    totals = {}
+    subtotals = {}
+    for (i in spell) {
+      symbol = spell[i];
+      row = "<td>" + symbol + "</td>";
+      if (symbol in geometriki.index) {
+        meaning = geometriki.index[symbol];
         for (name in geometriki.page.data.meta)
-          row += "<td>" + (name in record ? record[name] : "") + "</td>";
+        {
+          attribute = name in meaning ? meaning[name] : null;
+          row += "<td>" + attribute + "</td>";
+          if (typeof(attribute) == "number")
+          {
+            totals[name] = (name in totals ? totals[name] : 0) + attribute;
+            subtotals[name] = (name in subtotals ? subtotals[name] : 0) + attribute;
+          }
+        }
       }
       $("#play-output tbody").append("<tr>" + row + "</tr>");
+      if (!isEmpty(subtotals) && (!(symbol in geometriki.index) || (i*1+1) >= spell.length)) {
+        row = "<td>&nbsp;</td>";
+        for (name in geometriki.page.data.meta)
+          if (name in subtotals)
+            row += "<td>" + subtotals[name] + "</td>";
+          else
+            row += "<td>&nbsp;</td>";
+        $("#play-output tbody").append("<tr class=\"subtotals\">" + row + "</tr>");
+        subtotals = {};
+      }
+    }
+    if (totals) {
+      row = "<td>&nbsp;</td>";
+      for (name in geometriki.page.data.meta)
+        if (name in totals)
+          row += "<td>" + totals[name] + "</td>";
+        else
+          row += "<td>&nbsp;</td>";
+      $("#play-output tbody").append("<tr class=\"totals\">" + row + "</tr>");
     }
   } else {
-    $("#play-output").append("<span>(enter some text)</span>");
+    $("#play-output").append("<span>(enter some spell)</span>");
   }
 };
 

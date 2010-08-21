@@ -122,6 +122,7 @@ class PagesController(BaseController):
             return json
         elif format=='play':
             c.page = page
+            c.text = request.GET.get('text', '')
             return render('/pages/play.mako')
         elif format=='txt':
             response.content_type = 'text/plain'
