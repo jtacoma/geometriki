@@ -42,12 +42,9 @@ class AuthController(BaseController):
             c.errors.append('No openid services found for ' + form_openid)
             return render('/auth/login.mako')
         return_to = request.url.replace('verify', 'process')
-        if oid_request.shouldSendRedirect():
-            url = oid_request.redirectURL(return_to, return_to)
-            return redirect(url)
-        else:
-            c.errors.append('python-openid did not recommend redirecting you to your OpenId provider.')
-            return render('/auth/login.mako')
+        # if oid_request.shouldSendRedirect():
+        url = oid_request.redirectURL(return_to, return_to)
+        return redirect(url)
 
     def process(self):
         consumer = openid.consumer.consumer.Consumer(session, None)

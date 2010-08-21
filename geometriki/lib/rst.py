@@ -21,8 +21,9 @@ def rst2html(txt):
     inliner = docutils.parsers.rst.states.Inliner()
     parser = docutils.parsers.rst.Parser(inliner=inliner)
     content = unicode(txt)
+    settings = dict(file_insertion_enabled=0, raw_enabled=0, _disable_config=1)
     parts = docutils.core.publish_parts(content, writer_name='html', parser=parser,
-            settings_overrides=dict(file_insertion_enabled=0,raw_enabled=0))
+            settings_overrides=settings)
     html = parts['html_body']
     return html
 

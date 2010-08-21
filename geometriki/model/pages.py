@@ -34,8 +34,8 @@ class Page (object):
         return self.name and os.path.exists(self._get_path())
 
     def get_raw_content(self):
-        if '/' in self.name or self.name in ['.', '..']:
-            raise Exception("Hey now, just what do you think you're doing?")
+        if '/' in self.name or self.name.startswith('.'):
+            raise Exception("Invalid page name: %r" % self.name)
         if hasattr(self, 'content'): return self.content
         if not self.exists(): return None
         return codecs.open(self._get_path(), 'r', 'utf-8').read()
@@ -96,8 +96,8 @@ class Page (object):
         return hasattr(self, 'content')
 
     def save(self):
-        if '/' in self.name or self.name in ['.', '..']:
-            raise Exception("Hey now, just what do you think you're doing?")
+        if '/' in self.name or self.name.startswith('.'):
+            raise Exception("Invalid page name: %r" % self.name)
         if hasattr(self, 'content'):
             _ensure_pages_dir()
             f = codecs.open(self._get_path(), mode='w', encoding='utf-8')
