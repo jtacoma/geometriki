@@ -7,7 +7,7 @@ reporter: Joshua Tacoma <joshua@yellowseed.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: json_embedded format should just store the data in a var, instead of waiting.
