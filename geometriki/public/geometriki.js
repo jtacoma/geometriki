@@ -1,4 +1,5 @@
-if (typeof(geometriki) == "undefined") geometriki = {};
+geometriki = {};
+geometriki.pages = {};
 
 function isEmpty(item) { for(var i in item) { return false; } return true; }
 
@@ -68,9 +69,13 @@ geometriki.update_index = function(all_records, key_names) {
 };
 
 geometriki.update_index_from_page = function() {
-  if (!("page" in geometriki && "data" in geometriki.page)) return {};
+  if (!("page" in geometriki && typeof(geometriki.page) != "undefined" && "data" in geometriki.page))
+  {
+      geometriki.error("Page scripts were not loaded or failed to initialize.");
+      return;
+  }
   var data = geometriki.page.data;
-  if (!("meta" in data && "records" in data)) return {};
+  if (!("meta" in data && "records" in data)) return;
   var keys = [];
   for (property in data.meta) {
     keys.push(property);

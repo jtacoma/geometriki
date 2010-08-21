@@ -21,6 +21,21 @@ from pylons import config
 
 from geometriki.lib.rst import rst2html, rst2json
 
+_JAVASCRIPT_TEMPLATE = r"""
+geometriki.pages["%(name)s"] = {
+    "name": "%(name)s",
+    "data": %(json)s
+};
+if (!("page" in geometriki) || typeof(geometriki.page) == "undefined")
+    geometriki.page = geometriki.pages["%(name)s"];
+$(function () {
+    geometriki.message("Script loaded for <strong>" + geometriki.page.name + "</strong>.");
+});"""
+
+_JAVASCRIPT_ERROR_TEMPLATE = r"""$(function () {
+    geometriki.error("Failed to generate script for <strong>%(name)s</strong>.");
+});"""
+
 class Page (object):
 
     def __init__(self, name, title=None, content=None):
@@ -45,21 +60,6 @@ class Page (object):
         formatted = rst2html(content)
         return formatted
 
-    def get_javascript_content(self):
-        try:
-            # this is basically a no-op... maybe it doesn't make sense after all?
-            script = r'''$(function () {
-                if (typeof(geometriki) == "undefined") geometriki = {};
-                if (!("page" in geometriki)) geometriki.page = {};
-                geometriki.page.name = "%(name)s";
-                geometriki.message("JavaScript loaded for page <strong>" + geometriki.page.name + "</strong>.");
-            });''' % dict(name=self.name)
-        except:
-            script = r'''$(function () {
-                geometriki.error("Failed to load JavaScript for <strong>%(name)s</strong>.");
-            });''' % dict(name=self.name)
-        return script
-
     def get_json_content(self):
         content = self.get_raw_content()
         if content:
@@ -68,22 +68,12 @@ class Page (object):
             json = 'null'
         return json
 
-    def get_json_content_embedded(self):
-        'Formatted content (JSON) but designed for embedding in a larger page.'
+    def get_javascript(self):
         try:
             json = self.get_json_content()
-            script = r'''$(function() {
-                if (typeof(geometriki) == "undefined") geometriki = {};
-                if (!("page" in geometriki)) geometriki.page = {};
-                geometriki.page.name = "%(name)s";
-                geometriki.page.data = %(json)s;
-                geometriki.message("JSON data loaded for <strong>" + geometriki.page.name + "</strong>.");
-                geometriki.play_begin();
-            });''' % dict(name=self.name, json=json)
+            script = _JAVASCRIPT_TEMPLATE % dict(name=self.name, json=json)
         except:
-            script = r'''$(function () {
-                geometriki.error("Failed to load JSON data for <strong>%(name)s</strong>.");
-            });''' % dict(name=self.name)
+            script = _JAVASCRIPT_ERROR_TEMPLATE % dict(name=self.name)
         return script
 
     def get_timestamp(self):

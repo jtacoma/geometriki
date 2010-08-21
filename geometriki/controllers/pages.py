@@ -114,16 +114,12 @@ class PagesController(BaseController):
         if not page.exists() and not session['user']: abort(404)
         if format=='js':
             response.content_type = 'text/javascript'
-            script = page.get_javascript_content()
+            script = page.get_javascript()
             return script
         elif format=='json':
             response.content_type = 'application/json'
             json = page.get_json_content()
             return json
-        elif format=='json_embedded':
-            response.content_type = 'text/javascript'
-            script = page.get_json_content_embedded()
-            return script
         elif format=='play':
             c.page = page
             return render('/pages/play.mako')

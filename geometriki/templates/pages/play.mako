@@ -2,7 +2,11 @@
 <%def name="title()">${c.page.title}</%def>
 <%def name="head_tags()">
   <script type="text/javascript" src="${url('page', id=c.page.name)}.js"></script>
-  <script type="text/javascript" src="${url('page', id=c.page.name)}.json_embedded"></script>
+  <script type="text/javascript">
+    $(function() {
+      geometriki.play_begin();
+    });
+  </script>
   ${parent.head_tags()}
 </%def>
 <%def name="actions()">
