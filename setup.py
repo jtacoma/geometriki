@@ -30,7 +30,7 @@ except ImportError:
 
 setup(
     name='geometriki',
-    version='0.1.10',
+    version='0.1.11',
     description='A collaborative JavaScript development environment.',
     author='Joshua Tacoma',
     author_email='joshua@yellowseed.org',
