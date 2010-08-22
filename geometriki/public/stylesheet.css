@@ -13,6 +13,7 @@ h3 { font-size: 108%; font-weight: bold }
 h4, h5, h6 { font-size: 108% }
 p, table { margin: 0.5em 0 }
 strong { font-weight: bolder }
+em { font-style: italic }
 blockquote { margin: 1em; padding: 1em; border: 2px solid #eee }
 textarea { padding-left: 3px }
 
