@@ -51,7 +51,7 @@ geometriki.play_respond = function() {
         }
       }
       $("#play-output tbody").append("<tr>" + row + "</tr>");
-      if (!isEmpty(subtotals) && (!(symbol in geometriki.index) || (i*1+1) >= spell.length)) {
+      if (!isEmpty(subtotals) && ((!(symbol in geometriki.index) && symbol.trim().length==0) || (i*1+1) >= spell.length)) {
         row = "<td>&nbsp;</td>";
         for (name in geometriki.page.data.meta)
           if (name in subtotals)
@@ -72,7 +72,7 @@ geometriki.play_respond = function() {
       $("#play-output tbody").append("<tr class=\"totals\">" + row + "</tr>");
     }
   } else {
-    $("#play-output").append("<span>(enter some spell)</span>");
+    $("#play-output").append("<span>(enter some text)</span>");
   }
 };
 

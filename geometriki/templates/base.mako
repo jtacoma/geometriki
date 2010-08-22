@@ -43,7 +43,7 @@
 <%def name="foot()">
 	<a href="mailto:joshua@yellowseed.org">contact</a>
   &nbsp;&nbsp;|&nbsp;&nbsp;
-	<a href="http://gitorious.org/geometriki">geometriki source code</a>
+	<a href="http://gitorious.org/geometriki">source code</a>
 </%def>
 <%def name="navigation()">
 	<li><a href="${h.url('pages')}">pages</a></li>

@@ -40,11 +40,11 @@ a:hover { text-decoration: underline; }
 
 /* nested blocks of text: */
 /*code, blockquote { padding: 2em } */
-code {
+pre {
   display: block;
-  background: #ddd;
+  background: #eee;
   margin: 1em;
-  padding: 0, 1em;
+  padding: 2px 1em;
 }
 
 /* tables */
@@ -61,10 +61,11 @@ textarea { width: 100%; font-family: monospace }
 /* ...other custom styles... */
 
 form .openid_url {
-  background: #FFFFFF url('/openid-login-bg.gif') no-repeat scroll 0pt 50%;
+  background: #fff url('/openid-login-bg.gif') no-repeat scroll 0pt 50%;
   padding-left: 18px;
 }
 .error { color: red }
 .error #bd { color: black ; background: #fee; border: 2px solid #f00 }
 .subtotals { font-weight: bolder ; background: #eee; }
 .totals { font-weight: bolder ; background: #ddd; }
+input.play-input { width: 100% }
