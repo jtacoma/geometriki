@@ -26,22 +26,23 @@ geometriki.play_begin = function(initial_text) {
 };
 
 geometriki.play_respond = function() {
-  $("#play-output").empty();
   var spell = $(".play-input").val();
   if (spell) {
-    $("#play-output").append("<table><thead><th>&nbsp;</th></thead><tbody valign=\"top\"/></table>");
-    for (name in geometriki.page.data.meta)
-      $("#play-output thead").append("<th>" + name + "</th>");
-    totals = {}
-    subtotals = {}
-    for (i in spell) {
-      symbol = spell[i];
-      row = "<td>" + symbol + "</td>";
+    var thead = "<thead><tr><th>&nbsp;</th>";
+    for (var name in geometriki.page.data.meta)
+      thead += "<th>" + name + "</th>";
+    thead += "</tr></thead>";
+    var totals = {}
+    var subtotals = {}
+    var tbody = "";
+    for (var i=0; i<spell.length; ++i) {
+      var symbol = spell[i];
+      var row = "<td>" + symbol + "</td>";
       if (symbol in geometriki.index) {
-        meaning = geometriki.index[symbol];
-        for (name in geometriki.page.data.meta)
+        var meaning = geometriki.index[symbol];
+        for (var name in geometriki.page.data.meta)
         {
-          attribute = name in meaning ? meaning[name] : null;
+          var attribute = name in meaning ? meaning[name] : null;
           row += "<td>" + attribute + "</td>";
           if (typeof(attribute) == "number")
           {
@@ -50,29 +51,36 @@ geometriki.play_respond = function() {
           }
         }
       }
-      $("#play-output tbody").append("<tr>" + row + "</tr>");
-      if (!isEmpty(subtotals) && ((!(symbol in geometriki.index) && symbol.trim().length==0) || (i*1+1) >= spell.length)) {
-        row = "<td>&nbsp;</td>";
+      tbody += "<tr>" + row + "</tr>";
+      if (!isEmpty(subtotals) && ((!(symbol in geometriki.index) && symbol.trim().length==0) || (+i+1) >= spell.length)) {
+        var subrow = "<td>&nbsp;</td>";
         for (name in geometriki.page.data.meta)
           if (name in subtotals)
-            row += "<td>" + subtotals[name] + "</td>";
+            subrow += "<td>" + subtotals[name] + "</td>";
           else
-            row += "<td>&nbsp;</td>";
-        $("#play-output tbody").append("<tr class=\"subtotals\">" + row + "</tr>");
+            subrow += "<td>&nbsp;</td>";
+        tbody += "<tr class=\"subtotals\">" + subrow + "</tr>";
         subtotals = {};
       }
     }
-    if (totals) {
-      row = "<td>&nbsp;</td>";
-      for (name in geometriki.page.data.meta)
+    if (totals && tbody) {
+      var totalrow = "<td>&nbsp;</td>";
+      for (var name in geometriki.page.data.meta)
         if (name in totals)
-          row += "<td>" + totals[name] + "</td>";
+          totalrow += "<td>" + totals[name] + "</td>";
         else
-          row += "<td>&nbsp;</td>";
-      $("#play-output tbody").append("<tr class=\"totals\">" + row + "</tr>");
+          totalrow += "<td>&nbsp;</td>";
+      tbody += "<tr class=\"totals\">" + totalrow + "</tr>";
     }
+    var extra = "";
+    if (!tbody) {
+      extra = "<span class=\"error\">Oops, there seems to be a bug in this page's javascript.</span>";
+    }
+    tbody = "<tbody valign=\"top\">" + tbody + "</tbody>";
+    var table = "<table>" + thead + tbody + "</table>";
+    $("#play-output").html(table + extra);
   } else {
-    $("#play-output").append("<span>(enter some text)</span>");
+    $("#play-output").html("<span>(enter some text)</span>");
   }
 };
 

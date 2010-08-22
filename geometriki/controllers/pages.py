@@ -111,7 +111,7 @@ class PagesController(BaseController):
             c.page = page
             return render('/pages/show.mako')
         # otherwise, if page does not exist, it is a 404:
-        if not page.exists() and not session['user']: abort(404)
+        if not page.exists() and not session.get('user', ''): abort(404)
         if format=='js':
             response.content_type = 'text/javascript'
             script = page.get_javascript()
