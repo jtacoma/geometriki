@@ -30,9 +30,10 @@ def rst2html(txt):
 def rst2data(txt):
     parser = docutils.parsers.rst.Parser()
     document = docutils.utils.new_document('buffer')
+    document.settings.file_insertion_enabled = None
     document.settings.tab_width = 4
-    document.settings.pep_references = 1
-    document.settings.rfc_references = 1
+    document.settings.pep_references = 0
+    document.settings.rfc_references = 0
     document.settings.trim_footnote_reference_space = None
     parser.parse(txt, document)
     dom = document.asdom()
