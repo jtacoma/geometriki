@@ -33,6 +33,7 @@ def rst2data(txt):
     document.settings.tab_width = 4
     document.settings.pep_references = 1
     document.settings.rfc_references = 1
+    document.settings.trim_footnote_reference_space = None
     parser.parse(txt, document)
     dom = document.asdom()
     queue = list(dom.childNodes)
