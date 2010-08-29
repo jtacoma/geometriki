@@ -3,11 +3,14 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>${self.title()}</title>
-    <script type="text/javascript" src="/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="/geometriki.js"></script>
-    <link rel="stylesheet" type="text/css" href="/reset-fonts-grids.css" />
-    <link rel="stylesheet" type="text/css" href="/stylesheet.css" />
-    <link rel="stylesheet" type="text/css" media="print" href="/print.css" />
+    <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.4.custom.min.js"></script>
+    <script type="text/javascript" src="/js/protovis-r3.2.js"></script>
+    <script type="text/javascript" src="/js/geometriki.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/yui/reset-fonts-grids.css" />
+    <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.8.4.custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css" />
+    <link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
     ${self.head_tags()}
   </head>
   <body>
