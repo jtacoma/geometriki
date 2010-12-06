@@ -17,6 +17,7 @@ import codecs
 import os
 
 import formencode
+import json
 from pylons import config
 
 from geometriki.lib.rst import rst2html, rst2json, rst2data
@@ -29,11 +30,20 @@ geometriki.pages["%(name)s"] = {
 if (!("page" in geometriki) || typeof(geometriki.page) == "undefined")
     geometriki.page = geometriki.pages["%(name)s"];
 $(function () {
-    geometriki.message("Script loaded for <strong>" + geometriki.page.name + "</strong>.");
+    geometriki.message("Script loaded for <strong>%(name)s</strong>.");
 });"""
 
 _JAVASCRIPT_ERROR_TEMPLATE = r"""$(function () {
     geometriki.error("Failed to generate script for <strong>%(name)s</strong>.");
+});"""
+
+_JAVASCRIPT_WORDS_TEMPLATE = r"""
+geometriki.words["%(name)s"] = {
+    "name": "%(name)s",
+    "data": %(json)s
+};
+$(function () {
+    geometriki.message("Words loaded for <strong>%(name)s</strong>.");
 });"""
 
 class Page (object):
@@ -86,6 +96,19 @@ class Page (object):
             return repr(os.stat(self._get_path()).st_mtime)
         else:
             return ''
+
+    def get_words(self):
+        content = self.get_raw_content()
+        if content:
+            return set(content.split())
+        else:
+            return set()
+
+    def get_words_js(self):
+        wordlist = list(self.get_words())
+        words_js = json.dumps(wordlist, ensure_ascii=False)
+        script = _JAVASCRIPT_WORDS_TEMPLATE % dict(name=self.name, json=words_js)
+        return script
 
     def has_changes(self):
         return hasattr(self, 'content')

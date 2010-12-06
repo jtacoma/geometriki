@@ -6,10 +6,11 @@ import logging
 from formencode.variabledecode import variable_decode
 from pylons import request, response, session, tmpl_context as c, url
 from pylons.controllers.util import abort, redirect
+import json
 
 from geometriki.lib.base import BaseController, render
-from geometriki.model.pages import get_page, get_page_list, PageCreateForm, PageUpdateForm
 from geometriki.model.correspond import CorrespondForm
+from geometriki.model.pages import get_page, get_page_list, PageCreateForm, PageUpdateForm
 
 log = logging.getLogger(__name__)
 
@@ -58,6 +59,9 @@ class CorrespondController(BaseController):
         c.pages = form_result.get('pages')
         c.keys_for_select = self._keys_for_select()
         c.input_keys = form_result.get('input_keys')
+        c.input_keys_json = json.dumps(c.input_keys, ensure_ascii=False)
         c.output_keys = form_result.get('output_keys')
+        c.output_keys_json = json.dumps(c.output_keys, ensure_ascii=False)
+        c.key_pages = list(set([key.split('.')[0] for key in c.input_keys +
+                                c.output_keys]))
         return render('/correspond/dictionary.mako')
-

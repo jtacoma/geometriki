@@ -127,6 +127,10 @@ class PagesController(BaseController):
         elif format=='txt':
             response.content_type = 'text/plain'
             return page.get_raw_content()
+        elif format=='words-js':
+            response.content_type = 'text/javascript'
+            json = page.get_words_js()
+            return json
         elif format=='yaml':
             response.content_type = 'text/plain'
             json = page.get_json_content()

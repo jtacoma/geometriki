@@ -3,8 +3,16 @@
 
 <%def name="head_tags()">
   % for page_name in c.pages:
-    <script type="text/javascript" src="${page_name}.js"></script>
+    <script type="text/javascript" src="${url(controller='pages',id=page_name,action='show')}.words-js"></script>
   % endfor
+  % for page_name in c.key_pages:
+    <script type="text/javascript" src="${url(controller='pages',id=page_name,action='show')}.js"></script>
+  % endfor
+  <script type="text/javascript">
+    $(function() {
+      geometriki.build_dictionary(${c.input_keys_json | n}, ${c.output_keys_json | n});
+    });
+  </script>
   ${parent.head_tags()}
 </%def>
 
@@ -21,3 +29,6 @@ ${h.form(url(controller="correspond", action="dictionary"), method="get")}
   ${h.select("output_keys", c.output_keys, c.keys_for_select, multiple=True)}
   ${h.submit("submit", "Submit")}
 ${h.end_form()}
+
+<div id="dictionary">
+</div>
