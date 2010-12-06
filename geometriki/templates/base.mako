@@ -49,7 +49,8 @@
 	<a href="http://gitorious.org/geometriki">source code</a>
 </%def>
 <%def name="navigation()">
-	<li><a href="${h.url('pages')}">pages</a></li>
+	<li><a href="${h.url('pages')}">page index</a></li>
+	<li><a href="${h.url(controller='correspond', action='index')}">correspondences</a></li>
 </%def>
 <%def name="actions()">
   % if c.user:

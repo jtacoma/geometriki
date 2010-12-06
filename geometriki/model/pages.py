@@ -19,7 +19,7 @@ import os
 import formencode
 from pylons import config
 
-from geometriki.lib.rst import rst2html, rst2json
+from geometriki.lib.rst import rst2html, rst2json, rst2data
 
 _JAVASCRIPT_TEMPLATE = r"""
 geometriki.pages["%(name)s"] = {
@@ -59,6 +59,11 @@ class Page (object):
         content = self.get_raw_content()
         formatted = rst2html(content)
         return formatted
+
+    def get_data(self):
+        content = self.get_raw_content()
+        data = rst2data(content)
+        return data
 
     def get_json_content(self):
         content = self.get_raw_content()
@@ -102,7 +107,8 @@ class Page (object):
 
 def get_page_list():
     pages_dir = config['pages_dir']
-    pages = [Page(filename) for filename in os.listdir(pages_dir) if not filename.startswith('.')]
+    page_names = [unicode(filename, 'utf-8') for filename in os.listdir(pages_dir) if not filename.startswith('.')]
+    pages = [Page(filename) for filename in page_names]
     pages.sort(lambda a, b: cmp(a.name, b.name))
     return pages
 
