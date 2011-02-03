@@ -2,6 +2,8 @@
 geometriki
 ==========
 
+Note: geometriki development has stopped, perhaps indefinitely.  Since its main purpose was to provide javascript modules from formatted text, it may be reimplemented as a plugin to an existing wiki or, more likely, as a transforming proxy.
+
 Installation and Setup
 ======================
 
